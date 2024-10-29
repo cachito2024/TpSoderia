@@ -1,0 +1,140 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url('https://st2.depositphotos.com/1071909/7201/i/600/depositphotos_72019217-stock-photo-office-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* La imagen de fondo se mantiene fija cuando se hace scroll */
+  min-height: 100vh;
+  /* Asegúrate de que el cuerpo tenga al menos la altura de la ventana */
+}
+
+.login-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+  position: relative;
+  top: 50px;
+  /* Añadir posición relativa para el posicionamiento absoluto de imágenes */
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  padding: 10px;
+  background-color: #13429a;
+  color: #ffffff;
+  font-weight: bold;
+  border: #13429a;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.mi_imag,
+.mi_imag2 {
+
+  border-radius: 20px;
+  position: absolute;
+  border-radius: 20px;
+  max-width: 100%;
+  /* Asegura que la imagen no sea más ancha que su contenedor */
+  height: auto;
+  /* Mantiene la proporción de la imagen */
+}
+
+.mi_imag {
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 150px;
+}
+
+.mi_imag2 {
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100px;
+}
+
+.uno {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 10px;
+  /* border: 1px solid #75757c;*/
+  width: 200px;
+  box-sizing: border-box;
+}
+
+.uno img {
+  max-width: 100%;
+  height: auto;
+  max-height: 100px;
+}
+
+.uno button {
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 3px;
+  border-radius: 10px;
+
+}
+
+
+
+.titulo {
+  font-size: 25px;
+
+}
+

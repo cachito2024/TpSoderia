@@ -1,0 +1,91 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  body {
+    background-image: url('https://st2.depositphotos.com/1071909/7201/i/600/depositphotos_72019217-stock-photo-office-background.jpg');
+    background-size: cover; /* Ajusta la imagen para cubrir todo el área del elemento */
+    background-position: center; /* Centra la imagen en el elemento */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed; /* La imagen de fondo se mantiene fija cuando se hace scroll */
+    min-height: 100vh; /* Asegúrate de que el cuerpo tenga al menos la altura de la ventana */
+  }
+  .navbar-custom {
+    background-color: #a1b6cc; /* Color de fondo de la barra de navegación */
+  }
+  
+  .navbar-custom .navbar-brand,
+  .navbar-custom .nav-link {
+    color: #2c2a2a; /* Color del texto */
+    font-weight: bold;
+  }
+  
+  .navbar-custom .nav-link:hover {
+    color: #f8f9fa; /* Color del texto al pasar el ratón */
+  }
+  
+    .form-section {
+      margin-top: 20px;
+  }
+  
+  #barrioTable {
+    text-align: center;
+  }
+  #barrioTable th, #barrioTable td {
+    text-align: center;
+  }
+  .table-container {
+    border: 1px solid #dee2e6;
+    border-radius: .375rem;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .table-container .table {
+    margin: 0;
+  }
+  .table-container .table td, .table-container .table th {
+    text-align: center; /* Centramos el texto de todas las celdas */
+  }
+  .modal-content {
+    border-radius: .375rem;
+  }
+  .form-section {
+    margin-top: 20px;
+  }
+  .modal-header {
+    background-color: #f8f9fa;
+  }
+  .modal-title {
+    color: #007bff;
+  }
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  .imgsoda{
+   width: 250px;
+   height: 250px;
+   margin-left: 50px;
+   margin-right: 50px;
+   border-radius: 20px;
+   border-style:inset;
+   margin-top: 5px;
+   margin-bottom: 30px;
+  }
+  
+  
+  .imgsoda{
+    justify-content: center;
+    align-items: center; /* Para centrar verticalmente, si es necesario */
+  }
+  
+
+  .grillaa{
+    margin-top: -25px;
+  }
