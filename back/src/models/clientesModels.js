@@ -13,16 +13,18 @@ const Cliente = {
                 c.telefono,
                 c.fechaAlta,
                 c.email,
+                c.idEstadoCliente,
                 b.nombre AS nombreBarrio,
                 l.nombre AS nombreLocalidad  -- Obtener nombre de localidad desde la tabla barrio
+
             FROM 
                 Soderia.cliente c
             JOIN 
                 Soderia.barrio b ON c.idBarrio = b.idBarrio
             JOIN 
                 Soderia.localidad l ON b.idLocalidad = l.idLocalidad -- Aquí se accede a la localidad
-            WHERE 
-                c.idEstadoCliente = 1;  -- Filtrar solo clientes activos
+            /* WHERE 
+                c.idEstadoCliente = 1;  -- Filtrar solo clientes activos  */
         `);
         return rows;
     },
@@ -73,7 +75,7 @@ const Cliente = {
             [nombre, apellido, direccion]
         );
         return rows.length > 0; // Devuelve true si encuentra un cliente
-    }
+    }   
 
 };
 
