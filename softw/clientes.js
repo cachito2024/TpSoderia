@@ -19,13 +19,14 @@ async function loadClientes() {
             row.innerHTML = `
                 <td data-criteria="nombre">${cliente.nombre}</td>
                 <td data-criteria="apellido">${cliente.apellido}</td>
-                <td >${cliente.direccion}</td>
+                <td data-criteria="direccion">${cliente.direccion}</td>
                 <td data-criteria="barrio">${cliente.nombreBarrio}</td>
                 <td data-criteria="localidad">${cliente.nombreLocalidad}</td>
                 <td >${cliente.telefono}</td>
                 <td>${cliente.email}</td>
                 <td data-criteria="dni">${cliente.numeroDocumento}</td>
                 <td>${new Date(cliente.fechaAlta).toLocaleDateString()}</td>
+               <td data-criteria="estado">${cliente.idEstadoCliente === 1 ? 'Activo' : 'Inactivo'}</td> <!-- Modificación aquí -->
                 <td>
                     <button class="btn btn-primary edit-button" data-id="${cliente.idCliente}">Editar</button>
                     <button class="btn btn-danger delete-button" data-id="${cliente.idCliente}">Eliminar</button>
@@ -188,7 +189,14 @@ document.getElementById('editClientForm').addEventListener('submit', async (even
         console.error('Error al actualizar el cliente:', error);
     }
 });
-
+document.addEventListener('DOMContentLoaded', () => {
+    const inputFecha = document.getElementById('fechaa');
+    if (inputFecha) {
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+        inputFecha.value = formattedDate; // Precargar la fecha actual
+    }
+});
     document.getElementById('addClientForm').addEventListener('submit', async (event) => {
         event.preventDefault();
     
@@ -276,34 +284,79 @@ document.getElementById('barrio2').addEventListener('change', async (event) => {
 
 
 //filtros 
+
+
 document.getElementById('filterForm').addEventListener('submit', (event) => {
-    event.preventDefault(); 
-    const criteria = document.getElementById('filterCriteria').value;
-    const value = document.getElementById('filterValue').value.trim().toLowerCase();
+    event.preventDefault();
+
+    // Obtener todos los criterios de filtro
+    const criteriaElements = document.querySelectorAll('.filter-criteria');
+    const filters = Array.from(criteriaElements).reduce((acc, elem) => {
+        const key = elem.dataset.criteria;
+        const value = elem.value.trim().toLowerCase();
+        if (value) {
+            acc.push({ key, value });
+        }
+        return acc;
+    }, []);
+
+    // Validar que al menos un filtro esté lleno
+    if (filters.length === 0) {
+        alert("Por favor, ingrese al menos un criterio de búsqueda.");
+        return;
+    }
 
     // Obtener todas las filas de la tabla
     const rows = document.querySelectorAll('table tbody tr');
+    let matchFound = false; // Bandera para verificar si hay coincidencias
 
     rows.forEach(row => {
-        // Obtener el valor de la celda correspondiente al criterio seleccionado
-        const cellValue = row.querySelector(`td[data-criteria="${criteria}"]`).textContent.toLowerCase();
-        
-        // Verificar si el valor de la celda contiene el valor ingresado
-        if (cellValue.includes(value)) {
-            row.style.display = ''; // Mostrar la fila
+        let isMatch = true;
+
+        filters.forEach(filter => {
+            const cell = row.querySelector(`td[data-criteria="${filter.key}"]`);
+            if (!cell) {
+                isMatch = false;
+                return;
+            }
+
+            let cellValue = cell.textContent.trim().toLowerCase();
+
+            // Manejar el caso especial para el estado "Activo/Inactivo"
+            if (filter.key === 'estado') {
+                cellValue = cellValue === 'activo' ? 'activo' : cellValue === 'inactivo' ? 'inactivo' : cellValue;
+            }
+
+            // Comparar el valor del filtro con el valor de la celda
+            if (filter.value !== '' && cellValue !== filter.value) {
+                isMatch = false;
+            }
+        });
+
+        if (isMatch) {
+            row.style.display = ''; // Mostrar la fila si hay coincidencia
+            matchFound = true; // Indicar que se encontró al menos una coincidencia
         } else {
-            row.style.display = 'none'; // Ocultar la fila
+            row.style.display = 'none'; // Ocultar la fila si no coincide
         }
     });
+
+    // Si no se encontró ninguna coincidencia
+    if (!matchFound) {
+        alert("No se encontraron clientes. Se restablecerá la búsqueda.");
+        document.getElementById('filterForm').reset();
+        rows.forEach(row => {
+            row.style.display = ''; // Mostrar todas las filas
+        });
+    }
 });
 
-// Botón para restablecer los filtros
 document.getElementById('resetFilter').addEventListener('click', () => {
     document.getElementById('filterForm').reset();
-    
+
     // Mostrar todas las filas de la tabla
     const rows = document.querySelectorAll('table tbody tr');
     rows.forEach(row => {
-        row.style.display = ''; // Mostrar todas las filas
+        row.style.display = '';
     });
 });

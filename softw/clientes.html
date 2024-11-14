@@ -31,12 +31,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="pedido.html">Pedidos</a>
                 </li>
-                <li class="nav-item">
+               <!--  <li class="nav-item">
                     <a class="nav-link" href="#">Proveedores</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Empleados</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </nav>
@@ -58,6 +58,7 @@
                         <th>Email</th>
                         <th>DNI</th>
                         <th>Fecha de Alta</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -188,7 +189,7 @@
 </div>
 
 
-
+<!-- 
 
     <div class="container filter-container conteinerFiltro">
         <form id="filterForm">
@@ -213,8 +214,51 @@
             <button type="button" id="resetFilter" class="btn btn-secondary ms-2 botones">Restablecer</button>
         </form>
     </div>
-    </div>
+    </div> -->
+    <div class="container mt-4">
+        <h2 class="mb-3">Filtro de Clientes</h2>
+        <form id="filterForm" class="row g-3">
+            <div class="col-md-4">
+                <label for="filterNombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control filter-criteria" id="filterNombre" data-criteria="nombre" placeholder="Filtrar por nombre">
+            </div>
+            <div class="col-md-4">
+                <label for="filterApellido" class="form-label">Apellido</label>
+                <input type="text" class="form-control filter-criteria" id="filterApellido" data-criteria="apellido" placeholder="Filtrar por apellido">
+            </div>
+            <div class="col-md-4">
+                <label for="filterDireccion" class="form-label">Dirección</label>
+                <input type="text" class="form-control filter-criteria" id="filterDireccion" data-criteria="direccion" placeholder="Filtrar por dirección">
+            </div>
+            <div class="col-md-4">
+                <label for="filterBarrio" class="form-label">Barrio</label>
+                <input type="text" class="form-control filter-criteria" id="filterBarrio" data-criteria="barrio" placeholder="Filtrar por barrio">
+            </div>
+            <div class="col-md-4">
+                <label for="filterDni" class="form-label">DNI</label>
+                <input type="text" class="form-control filter-criteria" id="filterDni" data-criteria="dni" placeholder="Filtrar por DNI">
+            </div>
+            <div class="col-md-4">
+                <label for="filterLocalidad" class="form-label">Localidad</label>
+                <input type="text" class="form-control filter-criteria" id="filterLocalidad" data-criteria="localidad" placeholder="Filtrar por localidad">
+            </div>
+            <div class="col-md-4">
+                <label for="filterEstado" class="form-label">Estado</label>
+                <select class="form-select filter-criteria" id="filterEstado" data-criteria="estado">
+                    <option value="">--Seleccione Estado--</option>
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                </select>
+            </div>
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+                <button type="button" id="resetFilter" class="btn btn-secondary">Restablecer</button>
+            </div>
+        </form>
 
+  
+    </div>
+    
 
 
 

@@ -32,12 +32,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="productos.html">Producto</a>
                 </li>
-                <li class="nav-item">
+              <!--   <li class="nav-item">
                     <a class="nav-link" href="#">Proveedores</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Empleados</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </nav>
@@ -216,33 +216,37 @@
             </div>
         </div>
 
-        <div class="container mt-4 filt">
-            <form id="filterForm" class="bg-white p-4 rounded border shadow-sm">
-                <h4 class="mb-4">Filtros de Búsqueda</h4>
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <label for="filterCriteria" class="form-label">Filtrar por:</label>
-                        <select id="filterCriteria" class="form-select">
-                            <option value="" disabled selected>Seleccionar</option>
-                            <option value="fecha">Fecha Pedido</option>
-                            <option value="nombre">Nombre Cliente</option>
-                            <option value="direccion">Dirección</option>
-                            <option value="barrio">Barrio</option>
-                            <option value="localidad">Localidad</option>
-                        </select>
-                    </div>
-                    <div class="col-md-8">
-                        <label for="filterValue" class="form-label">Valor del filtro:</label>
-                        <input type="text" id="filterValue" class="form-control" placeholder="Introduce el valor">
-                    </div>
+        <div class="container mt-4">
+            <h2 class="mb-3">Listado de Pedidos</h2>
+            <form id="filterForm" class="row g-3">
+                <div class="col-md-4">
+                    <label for="filterFechaDesde" class="form-label">Fecha Desde</label>
+                    <input type="date" class="form-control filter-criteria" id="filterFechaDesde" data-criteria="fecha-desde">
                 </div>
-                <div class="d-flex justify-content-end mt-3">
-                    <button type="submit" class="btn btn-primary me-2">Filtrar</button>
-                    <button type="button" id="resetFilter" class="btn btn-outline-secondary">Restablecer</button>
+                <div class="col-md-4">
+                    <label for="filterFechaHasta" class="form-label">Fecha Hasta</label>
+                    <input type="date" class="form-control filter-criteria" id="filterFechaHasta" data-criteria="fecha-hasta">
+                </div>
+                <div class="col-md-4">
+                    <label for="filterCliente" class="form-label">Cliente</label>
+                    <input type="text" class="form-control filter-criteria" id="filterCliente" data-criteria="cliente" placeholder="Filtrar por cliente">
+                </div>
+                <div class="col-md-4">
+                    <label for="filterEstado" class="form-label">Estado</label>
+                    <select class="form-select filter-criteria" id="filterEstado" data-criteria="estado">
+                        <option value="">--Seleccione Estado--</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="completado">Completado</option>
+                        <option value="cancelado">Cancelado</option>
+                    </select>
+                </div>
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                    <button type="button" id="resetFilter" class="btn btn-secondary">Restablecer</button>
                 </div>
             </form>
+    
         </div>
-
 
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>

@@ -109,7 +109,7 @@ async function cargarEstados() {
         console.error('Error al cargar estados:', error);
     }
 }
- // Función para mostrar el modal y cargar datos del pedido
+// Función para mostrar el modal y cargar datos del pedido
 async function mostrarModal(idPedido) {
     try {
         const pedidoResponse = await fetch(`http://localhost:4000/pedidos/${idPedido}`);
@@ -129,7 +129,7 @@ async function mostrarModal(idPedido) {
     } catch (error) {
         console.error('Error al cargar los datos del pedido:', error);
     }
-} 
+}
 
 
 // Muestra el modal de edición
@@ -173,8 +173,8 @@ document.getElementById('editPedidoForm').addEventListener('submit', async (even
             const result = await response.json();
             console.log(result.message);
             loadPedidos(); // Recargar la lista de pedidos
-              // Esperar un momento para que se carguen los datos antes de recargar la página
-              setTimeout(() => {
+            // Esperar un momento para que se carguen los datos antes de recargar la página
+            setTimeout(() => {
                 window.location.reload();
             }, 500);
             document.getElementById('editModal').style.display = 'none'; // Cerrar el modal
@@ -419,6 +419,14 @@ async function cargarEstados2() {
         console.error('Error al cargar estados:', error);
     }
 }
+document.addEventListener('DOMContentLoaded', () => {
+    const inputFecha = document.getElementById('fecha2');
+    if (inputFecha) {
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+        inputFecha.value = formattedDate; // Precargar la fecha actual
+    }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('addOrderForm').addEventListener('submit', async (event) => {
@@ -593,29 +601,89 @@ async function agregarFilaProducto() {
 document.getElementById('filterForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const criteria = document.getElementById('filterCriteria').value;
-    const value = document.getElementById('filterValue').value.toLowerCase().trim();
+    // Obtener los valores de los filtros
+    const fechaDesde = document.getElementById('filterFechaDesde').value;
+    const fechaHasta = document.getElementById('filterFechaHasta').value;
+    const cliente = document.getElementById('filterCliente').value.toLowerCase().trim();
+    const estado = document.getElementById('filterEstado').value.toLowerCase().trim();
 
-    // Selecciona todas las filas de la tabla
+    // Obtener todas las filas de la tabla
     const rows = document.querySelectorAll('#pedidosBody tr');
+    let matchFound = false; // Bandera para indicar si hay coincidencias
 
     rows.forEach(row => {
-        const cell = row.querySelector(`[data-criteria="${criteria}"]`);
+        let isMatch = true;
 
-        if (cell && cell.textContent.toLowerCase().includes(value)) {
-            row.style.display = ''; // Mostrar fila
-        } else {
-            row.style.display = 'none'; // Ocultar fila
+        // Filtrar por fecha
+        if (fechaDesde || fechaHasta) {
+            const fechaTexto = row.querySelector('[data-criteria="fecha"]').textContent.trim();
+            const [day, month, year] = fechaTexto.split('/');
+            const fechaPedido = new Date(`${year}-${month}-${day}`).getTime();
+
+            if (fechaDesde && !fechaHasta) {
+                // Si solo hay "Fecha Desde", buscar coincidencia exacta
+                const desde = new Date(fechaDesde).getTime();
+                if (fechaPedido !== desde) {
+                    isMatch = false;
+                }
+            } else if (fechaDesde && fechaHasta) {
+                // Si hay tanto "Fecha Desde" como "Fecha Hasta", verificar el rango
+                const desde = new Date(fechaDesde).getTime();
+                const hasta = new Date(fechaHasta).getTime();
+                if (fechaPedido < desde || fechaPedido > hasta) {
+                    isMatch = false;
+                }
+            }
+        }
+
+
+
+        // Filtrar por cliente con coincidencia exacta por palabras
+        if (cliente) {
+            const clienteTexto = row.querySelector('[data-criteria="nombre"]').textContent.toLowerCase().trim();
+            const clientePalabras = clienteTexto.split(' '); // Dividir el nombre completo en palabras
+            const filtroPalabras = cliente.split(' '); // Dividir el filtro ingresado en palabras
+
+            // Verificar si al menos una de las palabras en el filtro coincide con alguna palabra del cliente
+            const hayCoincidencia = filtroPalabras.some(filtroPalabra =>
+                clientePalabras.includes(filtroPalabra)
+            );
+
+            if (!hayCoincidencia) {
+                isMatch = false;
+            }
+        }
+        // Filtrar por estado
+        if (estado) {
+            const estadoTexto = row.querySelector('[data-criteria="estado"]').textContent.toLowerCase();
+            if (estadoTexto !== estado) {
+                isMatch = false;
+            }
+        }
+
+        // Mostrar u ocultar la fila según si cumple con todos los filtros
+        row.style.display = isMatch ? '' : 'none';
+
+        if (isMatch) {
+            matchFound = true; // Marcar que al menos una coincidencia se encontró
         }
     });
+
+    // Si no se encontró ninguna coincidencia
+    if (!matchFound) {
+        alert("No se encontraron pedidos. Se restablecerá la búsqueda.");
+        document.getElementById('filterForm').reset();
+        rows.forEach(row => {
+            row.style.display = ''; // Mostrar todas las filas
+        });
+    }
 });
 
 // Restablecer filtro
 document.getElementById('resetFilter').addEventListener('click', function () {
-    document.getElementById('filterCriteria').value = '';
-    document.getElementById('filterValue').value = '';
+    document.getElementById('filterForm').reset();
 
-    // Muestra todas las filas
+    // Mostrar todas las filas de la tabla
     const rows = document.querySelectorAll('#pedidosBody tr');
     rows.forEach(row => {
         row.style.display = '';
